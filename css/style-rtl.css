@@ -1,0 +1,27 @@
+/* Arabic Edition Styling */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1.2em;
+	text-align: right;
+}
+.menu_links ul {
+	text-align: right !important;
+}
+.how_we_work_area_rtl::after {
+	position: absolute;
+	content: "";
+	width: 50%;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background-image: url(../img/work/work.png);
+	background-size: cover;
+	background-position: center center;
+	-webkit-border-radius: 0 20px 20px 0;
+	-moz-border-radius: 0 20px 20px 0;
+	border-radius: 0 20px 20px 0;
+}
