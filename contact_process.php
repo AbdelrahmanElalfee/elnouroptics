@@ -9,7 +9,7 @@ use PHPMailer\PHPMailer\Exception;
 
 if(isset($_POST['send'])){
 
-$to = 'it@benefiteg.com';
+$to = 'CS@elnouroptics.net';
 $myMail = 'abdelrahmanelalfee@gmail.com';
 $name = $_POST['name'];    
 $msg = $_POST['message'];    
