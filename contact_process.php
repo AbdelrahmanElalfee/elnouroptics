@@ -1,35 +1,46 @@
 <?php
+include 'PHPMailer/src/Exception.php';
+include 'PHPMailer/src/PHPMailer.php';
+include 'PHPMailer/src/SMTP.php';
 
-$to = "abdelrahmanelalfee@gmail.com";
-$from = $_REQUEST['email'];
-$name = $_REQUEST['name'];
-$csubject = $_REQUEST['subject'];
-$number = $_REQUEST['number'];
-$cmessage = $_REQUEST['message'];
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-$headers = "From: $from";
-$headers = "From: " . $from . "\r\n";
-$headers .= "Reply-To: " . $from . "\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+if(isset($_POST['send'])){
 
-$subject = "You have a message from your Bitmap Photography.";
+$to = 'it@benefiteg.com';
+$myMail = 'abdelrahmanelalfee@gmail.com';
+$name = $_POST['name'];    
+$msg = $_POST['message'];    
+$subject = $_POST['subject'];    
+$email = $_POST['email'];    
+$mail = new PHPMailer;
 
-$logo = 'img/logo.png';
-$link = '#';
+// $mail->SMTPDebug = 3;                  // Enable verbose debug output
 
-$body = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><title>El-Nour Optics Mail</title></head><body>";
-$body .= "<table style='width: 100%;'>";
-$body .= "<thead style='text-align: center;'><tr><td style='border:none;' colspan='2'>";
-$body .= "<a href='{$link}'><img src='{$logo}' alt=''></a><br><br>";
-$body .= "</td></tr></thead><tbody><tr>";
-$body .= "<td style='border:none;'><strong>Name:</strong> {$name}</td>";
-$body .= "<td style='border:none;'><strong>Email:</strong> {$from}</td>";
-$body .= "</tr>";
-$body .= "<tr><td style='border:none;'><strong>Subject:</strong> {$csubject}</td></tr>";
-$body .= "<tr><td></td></tr>";
-$body .= "<tr><td colspan='2' style='border:none;'>{$cmessage}</td></tr>";
-$body .= "</tbody></table>";
-$body .= "</body></html>";
+$mail->isSMTP();                          // Set mailer to use SMTP
+$mail->Host = 'smtp.gmail.com';           // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                   // Enable SMTP authentication
+$mail->Username = $myMail;                // SMTP username
+$mail->Password = 'koxqeobcyoxdnxqo';     // SMTP password
+$mail->Port = 587;                        // TCP port to connect to
 
-$send = mail($to, $subject, $body, $headers);
+$mail->setFrom($myMail, 'Website', 1);
+$mail->addAddress($to);                   // Add a recipient
+$mail->Subject= $subject;
+$mail->Body= $msg;
+$mail->Body.= " My Name: ";
+$mail->Body.= $name;
+$mail->Body.= " My email address: ";
+$mail->Body.= $email;
+
+if(!$mail->send()) {
+    echo "<script> alert('Message could not be sent.'); </script>";
+    header("refresh:1;url=index.html");
+} else {
+    echo "<script> alert('Mail sent successfuly.'); </script>";
+    header("Refresh: 1; URL=index.html");
+}
+}
+?>
